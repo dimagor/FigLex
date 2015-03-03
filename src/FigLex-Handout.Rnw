@@ -1,0 +1,214 @@
+\documentclass{article}
+<<options, echo=FALSE>>=
+library(knitr)
+opts_chunk$set(echo=FALSE,warning=FALSE,message=FALSE,cache=FALSE)
+opts_knit$set(self.contained=FALSE)
+@
+
+<<multiplot>>=
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+    require(grid)
+
+    # Make a list from the ... arguments and plotlist
+    plots <- c(list(...), plotlist)
+
+    numPlots = length(plots)
+
+    # If layout is NULL, then use 'cols' to determine layout
+    if (is.null(layout)) {
+        # Make the panel
+        # ncol: Number of columns of plots
+        # nrow: Number of rows needed, calculated from # of cols
+        layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                         ncol = cols, nrow = ceiling(numPlots/cols))
+    }
+
+    if (numPlots==1) {
+        print(plots[[1]])
+
+    } else {
+        # Set up the page
+        grid.newpage()
+        pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+        # Make each plot, in the correct location
+        for (i in 1:numPlots) {
+            # Get the i,j matrix positions of the regions that contain this subplot
+            matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+            print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                            layout.pos.col = matchidx$col))
+        }
+    }
+}
+@
+
+<<figurespecs>>=
+textsize = 12
+@
+
+\usepackage[top=.8in, bottom=.8in, left=.7in, right=.7in, headsep=.15in]{geometry}
+\usepackage{type1cm} % scalable fonts
+\usepackage{lettrine}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage[rightcaption]{sidecap}
+
+
+\setlength{\parindent}{0pt}
+% \setlength{\parskip}{1em}
+\pagestyle{fancy}
+\renewcommand{\figurename}{Example}
+
+\fancyhead{} % clear all header fields
+\fancyhead[C]{\fontsize{24}{10} \selectfont \sc{Figure Lexicon}}
+\cfoot{Attribution-NonCommercial-ShareAlike 4.0 International: Dmitriy Gorenshteyn}
+
+%Definiitons
+\newcommand{\lex}[3]{
+\lettrine[lines=2,slope=0pt,nindent=3pt]{\uppercase{#1}}{}
+#2
+{\large \emph{#3}}
+}
+
+\begin{document}
+
+% \begin{center} 
+%   {\Huge Visualization Lexicon} \\
+%   \hrulefill
+% \end{center}
+
+{\Large\textbf{What is a figure?}}
+If we imagine a \textbf{visualization} as a visual interface between the viewer and the data then a figure is a visualization selected to convey a specific \textbf{message(s)} present in the data. The lexicon presented below allows us to  analyze and discuss the components present in the figure and their contribution to conveying the figure's intended message(s).
+\medskip
+\hrule
+\smallskip
+\lex{composition}
+{Visual information can frequently be represented in multiple ways; the choice of how to view this data is the composition. 
+% Writing lexicon parallel: \textbf{structure}
+}
+{\\ What is the best way to \textbf{compose} the image in order to represent the data?}
+
+<<composition, dependson="figurespecs">>=
+library(xkcd)
+library(ggplot2)
+library(dplyr)
+
+set.seed(2)
+diamonds_binned <- diamonds %>% mutate(carat=cut(carat,labels = seq(1,6,1),breaks=seq(0,6,1))) %>%
+  mutate(carat=as.numeric(as.character(carat))) %>% group_by(carat) %>% filter(carat<6)
+diamonds_binsum <- diamonds_binned %>% summarise(avgprice=mean(price)) 
+
+
+p_smooth <- ggplot() + geom_smooth(aes(x = carat,y = price),data = diamonds,se=FALSE,size=1.5) + 
+  xkcdaxis(xrange = c(0,5),yrange = range(diamonds$price),jitteramount=.1) + 
+  theme(title = element_text(size = textsize)) +
+  ggtitle("Line Plot") 
+  
+p_box <- ggplot() + geom_boxplot(aes(x = factor(carat),y = price),data = diamonds_binned) + 
+  xkcdaxis(xrange = c(0,5.3),yrange = range(diamonds_binned$price),jitteramount=.1) + 
+  theme(title = element_text(size = textsize)) +
+  ggtitle("Box Plot") + xlab("Carat")
+@
+
+<<plot_comp, dependson=c("composition","multiplot"),fig.height=2,fig.width=4.7,dpi=150,dev=c('png'), fig.show='hide'>>=
+multiplot(p_smooth,p_box,cols = 2)
+@
+
+\vspace{-12pt}
+\begin{SCfigure}[1][h]
+\centering
+\caption{Two examples of \textbf{compositions} that can be used to represent the same data; in this case the relationship between the carat and the price of a diamond. \smallskip \par{\underline{Addt'l Compositions:} bar plot, dot plot, density plot, violin plot} \medskip \par{\emph{Message: The price of a diamond increases with size (carat)}}  \vspace{12pt}}
+\includegraphics[width=4.7in]{figure/plot_comp-1.png}
+
+
+\end{SCfigure}
+\vspace{-12pt}
+\smallskip
+
+
+\hrule
+\smallskip
+\lex{detail}
+{The detail term reflects the amount information that is presented to the viewer. It is a delicate balance aimed at providing enough information to convey the message while limiting extraneous information that may detract from it.
+% Writing lexicon parallel: \textbf{scope}
+}
+{\\ What is the level of \textbf{detail} required to convey your message?}
+
+<<detail,dependson="figspecs">>=
+set.seed(2)
+diamonds_binned <- diamonds %>% mutate(carat=cut(carat,labels = seq(1,6,1),breaks=seq(0,6,1))) %>%
+  mutate(carat=as.numeric(as.character(carat))) %>% group_by(carat) %>% filter(carat<6)
+
+d_smooth <- ggplot() + geom_jitter(aes(x = carat,y = price),data = diamonds,size=1,alpha=.5) +  
+  geom_smooth(aes(x = carat,y = price),data = diamonds,se=FALSE,size=1.5) +   
+  xkcdaxis(xrange = c(0,5),yrange = range(diamonds$price),jitteramount=.1) + 
+  theme(title = element_text(size = textsize)) +
+  ggtitle("Line Plot")
+
+d_box <- ggplot() + geom_violin(aes(x = factor(carat),y = price),data = diamonds_binned) + 
+  xkcdaxis(xrange = c(0,5.3),yrange = range(diamonds_binned$price),jitteramount=.1) + 
+  theme(title = element_text(size = textsize)) +
+  ggtitle("Violin Plot") + xlab("Carat")
+@
+
+<<plot_detail, dependson=c("detail","multiplot"),fig.height=2,fig.width=4.7,dpi=150,dev=c('png'), fig.show='hide'>>=
+multiplot(d_smooth,d_box,cols = 2)
+@
+
+\vspace{-11pt}
+\begin{SCfigure}[1][h]
+\centering
+\caption{The same examples as Figure 1 can be viewed with additonal detail. The line plot now has the individual points plotted, the boxplot has been converted to a violin plot (providing us with the additional detail of price distribution). \medskip \par{\emph{Does this additional detail contribute effectively to the message?}}\vspace{11pt}}
+\includegraphics[width=4.7in]{figure/plot_detail-1.png}
+
+\end{SCfigure}
+\vspace{-12pt}
+\smallskip
+\hrule
+\smallskip
+\lex{key features}
+{Abstractly, key features are the ideas present in the figure that directly contribute to the message.
+% Writing lexicon parallel: \textbf{topic sentences}
+}
+{}
+\smallskip
+\lex{\& guides}
+{Guides are visual cues that direct the viewers attention to the key features.
+% \\ Writing lexicon parallel: \textbf{signposts}
+}
+{\\ What \textbf{features} are \textbf{key} to convey the message of this figure? \&
+}
+\par{\hspace{116pt} \large{\emph{How do you \textbf{guide} the viewer to the “Key Features”?}}}
+
+
+<<kfg,dependson="figspecs",fig.height=2.4,fig.width=4.4,fig.pos="h",dpi=150,dev=c('png'), fig.show='hide'>>=
+library(reshape2)
+m <- movies %>% select(year,rating,Action:Short) %>% 
+  melt(value.name = "type",id.vars = c("year","rating")) %>% filter(type>0) %>% select(-type) %>%
+  rename(category=variable) %>%
+  group_by(category)
+m_filt <- m %>% filter(category %in% c("Drama","Comedy"),year>1914) 
+
+ggplot() +  geom_smooth(aes(year,rating,color=category,linetype=category),data = m_filt,se=FALSE,size=1.5,method="glm") +   
+  xkcdaxis(xrange = range(m_filt$year),yrange = c(5.5,7),jitteramount=.1) + 
+  scale_linetype_manual(values=c("dotted","longdash")) + 
+  theme(title = element_text(size = textsize)) +
+  ggtitle("Drama Preferred over Comedy") +
+  ylab("IMDB  Rating")
+@
+
+\vspace{-11pt}
+\begin{SCfigure}[1][h]
+\centering
+\caption{The best way to understand key features is to determine which elements of a figure convey the intended message. In this example the most prominent key feature is the relationship between comedy \& drama over time. The elements \textbf{color, line type, axis labels, figure title and legend} act as \underline{guides} by directing attention and providing the necessary context of this relationship. \vspace{37pt}
+}
+\includegraphics[width=4.4in]{figure/kfg-1.png}
+
+\end{SCfigure}
+\vspace{-12pt}
+\smallskip
+
+\end{document}
