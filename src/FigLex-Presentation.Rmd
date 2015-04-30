@@ -20,7 +20,9 @@ opts_chunk$set(echo = FALSE,
 ```
 
 
+
 # How do we discuss written work? <br> <font size="12"><b>TIP:</b> Press "?" for help with navigation</font>
+
 
 ## The Lexicon for Writing
 <br>
@@ -83,6 +85,7 @@ ggplot() + geom_boxplot(aes(x = factor(carat),y = price),data = diamonds_binned)
 
 ```
 
+
 ## Bar Plot
 ```{r composition_barplot, dependson="composition_boxplot", eval=FALSE}
 diamonds_binned %>% group_by()
@@ -92,5 +95,6 @@ ggplot() + geom_bar(data = diamonds_binned, aes(x = factor(carat),y = price, gro
   theme(title = element_text(size = 12)) +
   ggtitle("Bar Plot") + xlab("Carat")
 ```
+
 
 
