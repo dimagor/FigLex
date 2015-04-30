@@ -125,7 +125,8 @@ The detail term reflects the amount information that is presented to the viewer.
 **i.e.** *What is the level of **detail** required to convey your message?*
 
 ##
-<h2>The relationship between the carat of a diamond & its price, same plots, more **detail**</h2>  
+<h2>The relationship between the carat of a diamond & its price</h2>  
+<h2>...same plots, more <u>detail</u></h2>
 
 ## Lineplot  
 ```{r detail_line}
