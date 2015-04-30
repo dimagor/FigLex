@@ -1,6 +1,6 @@
 ---
 title: "FigLex: The Figure Lexicon"
-author: Dima Gorenshteyn
+author: "by: Dima Gorenshteyn"
 output:
   revealjs::revealjs_presentation:
     theme: solarized
@@ -19,14 +19,16 @@ opts_chunk$set(echo = FALSE,
                cache = TRUE)
 ```
 
+# <img src="img/key_template.png"></img>
 
-
-# How do we discuss written work? <br> <font size="12"><b>TIP:</b> Press "?" for help with navigation</font>
-
+# How do we discuss written work?
 
 ## The Lexicon for Writing
+A <u>toolbox</u> centered around the question:  
+*What message(s) is the writer trying to convey to the reader?*  
 <br>
-<h2><center>Thesis, Motive, Structure, Key Words, ...  </center></h2>
+<h3><center>Thesis, Motive, Structure, Key Words, ...  </center></h3>
+<br>
 Learn more here: http://www.princeton.edu/writing/university/resources/lexicon.pdf
 
 # How do we discuss visual work?
@@ -50,11 +52,12 @@ a visualization selected to convey a specific **message(s)**
 
 ##  
 <img src="img/tri_yang_transparent.png" height="30%" width="30%" style="border:none; box-shadow:none"></img>  
-<h3> The <u>aim</u> of the Figure Lexicon is to identify how these three elements of a visualization contribute to the effective communication of a message</h3>  
+<h3> The <u>aim</u> of the Figure Lexicon is to identify how these three elements of a visualization contribute to the effective communication of a <u>message</u></h3>  
+
 # Composition  
 
 ## Composition  
-Visual information can frequently be represented in multiple ways; the choice of how to view this data is the composition.  
+Visual information can frequently be represented in multiple ways; the choice of how to represent this data is the **composition**
   
 **i.e.** *What is the best way to **compose** the image in order to represent the data?*
 
@@ -87,14 +90,123 @@ ggplot() + geom_boxplot(aes(x = factor(carat),y = price),data = diamonds_binned)
 
 
 ## Bar Plot
-```{r composition_barplot, dependson="composition_boxplot", eval=FALSE}
-diamonds_binned %>% group_by()
-ggplot() + geom_bar(data = diamonds_binned, aes(x = factor(carat),y = price, group=1), stat = "identity")
-+ 
+```{r composition_barplot, dependson="composition_boxplot"}
+diamonds_summary <- diamonds_binned %>% group_by(carat) %>% summarise(price = mean(price))
+ggplot() + geom_bar(data = diamonds_summary, aes(x = factor(carat),y = price, group=1), stat = "identity") + 
   xkcdaxis(xrange = c(0,5.3),yrange = range(diamonds_binned$price),jitteramount=.1) + 
   theme(title = element_text(size = 12)) +
   ggtitle("Bar Plot") + xlab("Carat")
 ```
 
+##  
+<h2>Other Composition Examples</h2>  
+<br>
+<div align="left">
+  <h4>Comparing Sample Distributions</h4>  
+  * Density Plot  
+  * Histogram  
+  * Box Plot
+  * Violin Plot
+  </div>
+<br>
+<div align="left">
+  <h4>Showing an Image of a Landmark</h4>  
+  * Choice of Angle  
+  * Photo/Sketch/3D rendering  
+</div>
+
+*.. the choice is dependent on the intended message of the figure*
+
+# Detail
+
+## Detail  
+The detail term reflects the amount information that is presented to the viewer. It is a delicate balance aimed at providing enough information to convey the message while limiting extraneous ￼￼￼￼￼information that may detract from it.  
+<br>
+**i.e.** *What is the level of **detail** required to convey your message?*
+
+##
+<h2>The relationship between the carat of a diamond & its price, same plots, more **detail**</h2>  
+
+## Lineplot  
+```{r detail_line}
+ggplot() + 
+  geom_point(aes(x = carat,y = price),data = diamonds, se = FALSE, size = 1.5, alpha = 0.1) +
+  geom_smooth(aes(x = carat,y = price),data = diamonds, se = FALSE, size = 1.5) + 
+  xkcdaxis(xrange = c(0,5),yrange = range(diamonds$price), jitteramount = .1) + 
+  theme(title = element_text(size = 12)) +
+  ggtitle("Line Plot") 
+```
+
+## Box Plot  
+```{r detail_boxplot, dependson="composition_boxplot"}
+ggplot() + geom_boxplot(aes(x = factor(carat),y = price, color = color),data = diamonds_binned) + 
+  xkcdaxis(xrange = c(0,5.3),yrange = range(diamonds_binned$price),jitteramount=.1) + 
+  theme(title = element_text(size = 12)) +
+  ggtitle("Box Plot") + xlab("Carat")
+
+```
 
 
+## Bar Plot
+```{r detail_barplot, dependson="composition_boxplot"}
+diamonds_summary <- diamonds_binned %>% group_by(carat,clarity, color) %>% summarise(price = mean(price))
+ggplot() + geom_bar(data = diamonds_summary, aes(x = factor(carat),y = price,  fill = color), stat = "identity", position="dodge") + 
+  xkcdaxis(xrange = c(0,5.3),yrange = range(diamonds_binned$price),jitteramount=.1) + 
+  facet_wrap( ~ clarity) +
+  theme(title = element_text(size = 12)) +
+  ggtitle("Bar Plot") + xlab("Carat")
+```
+
+
+# Key Features & Guides
+
+## Key Features & Guides  
+Abstractly, **key features** are the ideas present in the figure that directly contribute to the message.
+**Guides** are visual cues that direct the viewers attention to the key features.  
+<br>
+*What features are **key** to convey the message of this figure?*  
+*How do you **guide** the viewer to the Key Features?*
+
+##
+<h2>Example message: "Comedy films aren't what they used to be, might as well watch drama!"</h2>  
+
+
+##
+```{r, fig.height = 3, fig.width = 6}
+# Terribly simplified, but a great illustration
+library(reshape2)
+m <- movies %>% select(year,rating,Action:Short) %>% 
+  melt(value.name = "type",id.vars = c("year","rating")) %>% filter(type>0) %>% select(-type) %>%
+  rename(category = variable) %>%
+  group_by(category)
+m_filt <- m %>% filter(category %in% c("Drama","Comedy"),year>1914) 
+
+ggplot() +  geom_smooth(aes(year, rating, color = category, linetype = category),
+                        data = m_filt, se=FALSE, size = 1.5, method="glm") +   
+  xkcdaxis(xrange = range(m_filt$year), yrange = c(5.5, 7), jitteramount = .1) + 
+  scale_linetype_manual(values=c("dotted","longdash")) + 
+  theme(title = element_text(size = 12)) +
+  ggtitle("Drama Preferred over Comedy") +
+  ylab("IMDB  Rating")
+```
+
+* In this example the most prominent <u>key feature</u> is the relationship between comedy & drama over time
+* The elements **color, line type, axis labels, figure title and legend** act as <u>guides</u> by directing attention and providing the necessary context of this relationship
+
+# Summary
+
+## 
+<h2>Using the Figure Lexicon</h2>
+<div align="left">
+1. Identify the message(s) that is(are) important to convey to the viewer/reader  
+2. Select the **composition** and level of **detail** that captures the relevant information to convey the message  
+3. List the **Key Features** of your visualization that the viewer must be aware of  
+4. Direct the viewer to the key features using appropriate visual **guides**  
+5. Iterate through steps 2-4, each time asking yourself whether your figure effectively communicates the messages in Step 1  
+</div>
+
+## FigLex Handout/Cheatsheet
+The Figure Lexicon is also available in a convenient one-pager:
+https://github.com/dimagor/FigLex/raw/master/src/FigLex-Handout.pdf
+
+# Cheers!
