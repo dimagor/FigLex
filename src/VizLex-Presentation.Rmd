@@ -1,6 +1,5 @@
 ---
-title: "FigLex: The Figure Lexicon"
-author: "by: Dima Gorenshteyn"
+title: "VizLex: Discussing The Narrative of a Visualization"
 output:
   revealjs::revealjs_presentation:
     theme: solarized
@@ -36,17 +35,7 @@ Learn more here: http://www.princeton.edu/writing/university/resources/lexicon.p
 ## In General
 - "Do this, not that!" method
 - Learn by example
-- And now... using the Figure Lexicon!
-
-# What is a <u>FIGURE</u>?
-
-## Figure = Visualization + Message
-**Visualization**  
-a visual interface between the viewer and the data  
-
-**Figure**  
-a visualization selected to convey a specific **message(s)**
-
+- And now... using the Visualization Lexicon!
 
 # The Lexicon for Figures: FigLex
 
@@ -207,7 +196,7 @@ ggplot() +  geom_smooth(aes(year, rating, color = category, linetype = category)
 </div>
 
 ## FigLex Handout/Cheatsheet
-The Figure Lexicon is also available in a convenient one-pager:
+The Figure Lexicon is also available in a convenient one-pager:  
 https://github.com/dimagor/FigLex/raw/master/src/FigLex-Handout.pdf
 
 # Cheers!

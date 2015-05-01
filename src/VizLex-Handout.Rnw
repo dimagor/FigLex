@@ -57,7 +57,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 textsize = 12
 @
 
-\usepackage[top=.8in, bottom=.8in, left=.7in, right=.7in, headsep=.15in]{geometry}
+\usepackage[top=.8in, bottom=.8in, left=.7in, right=.7in, headsep=.20in]{geometry}
 \usepackage{type1cm} % scalable fonts
 \usepackage{lettrine}
 \usepackage{fancyhdr}
@@ -71,23 +71,28 @@ textsize = 12
 \renewcommand{\figurename}{Example}
 
 \fancyhead{} % clear all header fields
-\fancyhead[C]{\fontsize{24}{10} \selectfont \sc{Figure Lexicon}}
+\fancyhead[C]{\fontsize{24}{10} \selectfont \sc{Visualization Lexicon}}
 \cfoot{Attribution-NonCommercial-ShareAlike 4.0 International: Dmitriy Gorenshteyn}
 
 %Definitions
 \newcommand{\lex}[3]{
   \lettrine[lines=2,slope=0pt,nindent=3pt]{\uppercase{#1}}{}
   #2
+  \smallskip
   {\large \emph{#3}}
 }
 
-\begin{document}
+\newcommand{\lexsep}{
+  \medskip
+  \hrule
+  \vspace{6pt}
+  }
 
-{\Large\textbf{What is a figure?}}
-If we imagine a \textbf{visualization} as a visual interface between the viewer and the data then a figure is a visualization selected to convey a specific \textbf{message(s)} present in the data. The lexicon presented below allows us to  analyze and discuss the components present in the figure and their contribution to conveying the figure's intended message(s).
-\medskip
-\hrule
-\smallskip
+
+\begin{document}
+{\Large\textbf{Discussing the Narrative of a Visualization}}
+The lexicon presented below allows us to analyze and discuss the components present in a visualization and their contribution to conveying the intended message(s).
+\lexsep
 
 \lex{composition}
 {Visual information can frequently be represented in multiple ways; the choice of how to view this data is the composition. 
@@ -126,9 +131,7 @@ multiplot(p_smooth,p_box,cols = 2)
 \end{SCfigure}
 
 \vspace{-12pt}
-\smallskip
-\hrule
-\smallskip
+\lexsep
 
 \lex{detail}
 {The detail term reflects the amount information that is presented to the viewer. It is a delicate balance aimed at providing enough information to convey the message while limiting extraneous information that may detract from it.
@@ -154,7 +157,7 @@ d_violin <- ggplot() + geom_violin(aes(x = factor(carat),y = price),data = diamo
 multiplot(d_smooth,d_violin,cols = 2)
 @
 
-\vspace{-11pt}
+\vspace{-12pt}
 \begin{SCfigure}[1][h]
   \centering
   \caption{The same examples as Figure 1 can be viewed with additonal detail. The line plot now has the individual points plotted, the boxplot has been converted to a violin plot (providing us with the additional detail of price distribution).  \medskip \par{\emph{Does this additional detail contribute effectively to the message?}}\vspace{11pt}}
@@ -162,22 +165,18 @@ multiplot(d_smooth,d_violin,cols = 2)
 \end{SCfigure}
 
 \vspace{-12pt}
-\smallskip
-\hrule
-\smallskip
+\lexsep
 
 \lex{key features}
-{Abstractly, key features are the ideas present in the figure that directly contribute to the message.
+{Abstractly, key features are the ideas present in the visualization that directly contribute to the message.
 % Writing lexicon parallel: \textbf{topic sentences}
 }{}
 
-\smallskip
 \lex{\& guides}
 {Guides are visual cues that direct the viewers attention to the key features.
 % \\ Writing lexicon parallel: \textbf{signposts}
 }{\\ What \textbf{features} are \textbf{key} to convey the message of this figure? \&}
 \par{\hspace{116pt} \large{\emph{How do you \textbf{guide} the viewer to the “Key Features”?}}}
-
 
 <<kfg,dependson="figspecs",fig.height=2.4,fig.width=4.4,fig.pos="h",dpi=150,dev=c('png'), fig.show='hide'>>=
 library(reshape2)
@@ -203,6 +202,5 @@ ggplot() +  geom_smooth(aes(year,rating,color=category,linetype=category),data =
 
 \end{SCfigure}
 \vspace{-12pt}
-\smallskip
 
 \end{document}

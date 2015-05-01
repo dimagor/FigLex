@@ -1,5 +1,9 @@
-# FigLex
-A lexicon for discussing, dissecting and analyzing the visual elements of figures as they pertain to their intended message.
+# VizLex
+A lexicon for discussing, dissecting and analyzing the elements of a visualization as they pertain to their intended message.
+
+## Completed Components
+* [VizLex SlideDeck](./src/VizLex-Presentation.html)
+
 
 # Dependencies
 ```

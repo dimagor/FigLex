@@ -1,3 +1,8 @@
 FigLex-Handout.log
 FigLex-Handout.tex
 figure
+*_cache
+*_files
+knitr.sty
+*.tex
+*.log
