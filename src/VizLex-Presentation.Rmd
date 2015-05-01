@@ -102,7 +102,7 @@ ggplot() + geom_bar(data = diamonds_summary, aes(x = factor(carat),y = price, gr
   * Choice of Angle  
   * Photo/Sketch/3D rendering  
 </div>
-<br>
+
 *.. the choice is dependent on the intended message of the visualization*
 
 # Detail
