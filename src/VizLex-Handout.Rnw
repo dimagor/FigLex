@@ -175,7 +175,7 @@ multiplot(d_smooth,d_violin,cols = 2)
 \lex{\& guides}
 {Guides are visual cues that direct the viewers attention to the key features.
 % \\ Writing lexicon parallel: \textbf{signposts}
-}{\\ What \textbf{features} are \textbf{key} to convey the message of this figure? \&}
+}{\\ What \textbf{features} are \textbf{key} to convey the message of this visualization? \&}
 \par{\hspace{116pt} \large{\emph{How do you \textbf{guide} the viewer to the “Key Features”?}}}
 
 <<kfg,dependson="figspecs",fig.height=2.4,fig.width=4.4,fig.pos="h",dpi=150,dev=c('png'), fig.show='hide'>>=
@@ -197,7 +197,7 @@ ggplot() +  geom_smooth(aes(year,rating,color=category,linetype=category),data =
 \vspace{-11pt}
 \begin{SCfigure}[1][h]
   \centering
-  \caption{The best way to understand key features is to determine which elements of a figure convey the intended message. In this example the most prominent key feature is the relationship between comedy \& drama over time. The elements \textbf{color, line type, axis labels, figure title and legend} act as \underline{guides} by directing attention and providing the necessary context of this relationship. \vspace{37pt}}
+  \caption{The best way to understand key features is to determine which elements of a visualization convey the intended message. In this example the most prominent key feature is the relationship between comedy \& drama over time. The elements \textbf{color, line type, axis labels, title and legend} act as \underline{guides} by directing attention and providing the necessary context of this relationship. \vspace{37pt}}
   \includegraphics[width=4.4in]{figure/kfg-1.png}
 
 \end{SCfigure}

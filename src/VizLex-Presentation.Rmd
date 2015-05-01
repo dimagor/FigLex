@@ -37,11 +37,11 @@ Learn more here: http://www.princeton.edu/writing/university/resources/lexicon.p
 - Learn by example
 - And now... using the Visualization Lexicon!
 
-# The Lexicon for Figures: FigLex
+# VizLex: Lexicon for the Visualization Narrative
 
 ##  
 <img src="img/tri_yang_transparent.png" height="30%" width="30%" style="border:none; box-shadow:none"></img>  
-<h3> The <u>aim</u> of the Figure Lexicon is to identify how these three elements of a visualization contribute to the effective communication of a <u>message</u></h3>  
+<h3> The <u>aim</u> of the Visualization Lexicon is to identify how these three elements contribute to the effective communication of a desired <u>narrative/message</u></h3>  
 
 # Composition  
 
@@ -51,7 +51,7 @@ Visual information can frequently be represented in multiple ways; the choice of
 **i.e.** *What is the best way to **compose** the image in order to represent the data?*
 
 -----
-<h2>Different ways to <u>compose</u> a figure showing the relationship between the carat of a diamond & its price</h2>
+<h2>Different ways to <u>compose</u> a visualization showing the relationship between the carat of a diamond & its price</h2>
 
 ## Lineplot
 
@@ -95,7 +95,6 @@ ggplot() + geom_bar(data = diamonds_summary, aes(x = factor(carat),y = price, gr
   * Density Plot  
   * Histogram  
   * Box Plot
-  * Violin Plot
   </div>
 <br>
 <div align="left">
@@ -103,8 +102,8 @@ ggplot() + geom_bar(data = diamonds_summary, aes(x = factor(carat),y = price, gr
   * Choice of Angle  
   * Photo/Sketch/3D rendering  
 </div>
-
-*.. the choice is dependent on the intended message of the figure*
+<br>
+*.. the choice is dependent on the intended message of the visualization*
 
 # Detail
 
@@ -151,10 +150,10 @@ ggplot() + geom_bar(data = diamonds_summary, aes(x = factor(carat),y = price,  f
 # Key Features & Guides
 
 ## Key Features & Guides  
-Abstractly, **key features** are the ideas present in the figure that directly contribute to the message.
+Abstractly, **key features** are the ideas present in the visualization that directly contribute to the message.
 **Guides** are visual cues that direct the viewers attention to the key features.  
 <br>
-*What features are **key** to convey the message of this figure?*  
+*What features are **key** to convey the message of this visualization?*  
 *How do you **guide** the viewer to the Key Features?*
 
 ##
@@ -181,22 +180,22 @@ ggplot() +  geom_smooth(aes(year, rating, color = category, linetype = category)
 ```
 
 * In this example the most prominent <u>key feature</u> is the relationship between comedy & drama over time
-* The elements **color, line type, axis labels, figure title and legend** act as <u>guides</u> by directing attention and providing the necessary context of this relationship
+* The elements **color, line type, axis labels, title and legend** act as <u>guides</u> by directing attention and providing the necessary context of this relationship
 
 # Summary
 
 ## 
-<h2>Using the Figure Lexicon</h2>
+<h2>Using the Visualization Lexicon</h2>
 <div align="left">
 1. Identify the message(s) that is(are) important to convey to the viewer/reader  
 2. Select the **composition** and level of **detail** that captures the relevant information to convey the message  
 3. List the **Key Features** of your visualization that the viewer must be aware of  
 4. Direct the viewer to the key features using appropriate visual **guides**  
-5. Iterate through steps 2-4, each time asking yourself whether your figure effectively communicates the messages in Step 1  
+5. Iterate through steps 2-4, each time asking yourself whether your visualization effectively communicates the messages in Step 1  
 </div>
 
-## FigLex Handout/Cheatsheet
-The Figure Lexicon is also available in a convenient one-pager:  
-https://github.com/dimagor/FigLex/raw/master/src/FigLex-Handout.pdf
+## VizLex Handout/Cheatsheet
+The Visualization Lexicon is also available in a convenient one-pager:  
+https://rawgit.com/dimagor/VizLex/master/src/VizLex-Handout.pdf
 
 # Cheers!
