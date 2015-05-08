@@ -196,6 +196,6 @@ ggplot() +  geom_smooth(aes(year, rating, color = category, linetype = category)
 
 ## VizLex Handout/Cheatsheet
 The Visualization Lexicon is also available in a convenient one-pager:  
-https://rawgit.com/dimagor/VizLex/master/src/VizLex-Handout.pdf
+http://bit.ly/vizlex_handout
 
 # Cheers!
