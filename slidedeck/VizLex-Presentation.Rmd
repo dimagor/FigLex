@@ -96,7 +96,7 @@ ggplot() + geom_bar(data = diamonds_summary, aes(x = factor(carat),y = price, gr
   * Histogram  
   * Box Plot
   </div>
-<br>
+
 <div align="left">
   <h4>Showing an Image of a Landmark</h4>  
   * Choice of Angle  
@@ -108,7 +108,7 @@ ggplot() + geom_bar(data = diamonds_summary, aes(x = factor(carat),y = price, gr
 # Detail
 
 ## Detail  
-The detail term reflects the amount information that is presented to the viewer. It is a delicate balance aimed at providing enough information to convey the message while limiting extraneous ￼￼￼￼￼information that may detract from it.  
+The detail term reflects the amount information that is presented to the viewer. It is a delicate balance aimed at providing enough information to convey the message while limiting extraneous information that may detract from it.  
 <br>
 **i.e.** *What is the level of **detail** required to convey your message?*
 

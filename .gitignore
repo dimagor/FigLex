@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .DS_Store
+*_cache
+*_files
+knitr.sty
+*.tex
+*.log
